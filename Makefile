@@ -13,6 +13,31 @@ backend-test:
 	TEST_SCRIPT="test-env.sh" ./.github/resources/scripts/e2e-test.sh
 	TEST_SCRIPT="test-volume.sh" ./.github/resources/scripts/e2e-test.sh
 
+.PHONY: backend-test-flip-coin
+backend-test-flip-coin: 
+	. .venv/bin/activate
+	TEST_SCRIPT="test-flip-coin.sh" ./.github/resources/scripts/e2e-test.sh
+
+.PHONY: backend-test-static-loop
+backend-test-static-loop: 
+	. .venv/bin/activate
+	TEST_SCRIPT="test-static-loop.sh" ./.github/resources/scripts/e2e-test.sh
+
+.PHONY: backend-test-dynamic-loop
+backend-test-dynamic-loop: 
+	. .venv/bin/activate
+	TEST_SCRIPT="test-dynamic-loop.sh" ./.github/resources/scripts/e2e-test.sh
+
+.PHONY: backend-test-env
+backend-test-env: 
+	. .venv/bin/activate
+	TEST_SCRIPT="test-env.sh" ./.github/resources/scripts/e2e-test.sh
+
+.PHONY: backend-test-volume
+backend-test-volume: 
+	. .venv/bin/activate
+	TEST_SCRIPT="test-volume.sh" ./.github/resources/scripts/e2e-test.sh
+
 .PHONY: backend-visualization-test
 backend-visualization-test: 
 	./test/presubmit-backend-visualization.sh
@@ -66,7 +91,7 @@ frontend-test:
 grpc-modules-test:
 	pytest ./test/gcpc-tests/run_all_gcpc_modules.py
 	
-PHONY: kfp-kubernetes-execution-tests
+.PHONY: kfp-kubernetes-execution-tests
 kfp-kubernetes-execution-tests: 
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
 	export KFP_ENDPOINT="http://localhost:8888"
@@ -84,7 +109,6 @@ kfp-samples:
 
 .PHONY: kfp-sdk-runtime-tests
 kfp-sdk-runtime-tests:
-	export PULL_NUMBER="${{ github.event.inputs.pull_number || github.event.pull_request.number }}"
 	./test/presubmit-test-kfp-runtime-code.sh
 	
 .PHONY: kfp-sdk-tests
@@ -94,7 +118,6 @@ kfp-sdk-tests:
 .PHONY: kubeflow-pipelines-manifests
 kubeflow-pipelines-manifests:
 	./manifests/kustomize/hack/presubmit.sh 
-
 
 .PHONY: periodic-test
 periodic-test:

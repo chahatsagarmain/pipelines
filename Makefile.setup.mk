@@ -37,6 +37,8 @@ setup-backend-visualization-test: setup-python
 setup-frontend-test:
 	nvm install 14
 	nvm use 14
+	npm cache clean --force
+	cd ./frontend && npm ci
 	
 .PHONY: setup-grpc-modules-test
 setup-grpc-modules-test: setup-python
@@ -72,6 +74,12 @@ setup-kfp-kubernetes-execution-tests: setup-kfp
 	
 .PHONY: setup-kfp-samples
 setup-kfp-samples: setup-python setup-kfp
+
+.PHONY: setup-kfp-sdk-runtime-tests
+setup-kfp-sdk-runtime-tests: setup-python
+
+.PHONY: setup-kfp-sdk-tests
+setup-kfp-sdk-tests: setup-python
 	
 .PHONY: setup-periodic-test
 setup-periodic-test: setup-kfp
@@ -86,6 +94,7 @@ setup-sdk-component-yaml: setup-python
 	pip3 install protobuf==4.25.3
 	cd ./api
 	make clean python
+	cd ./..
 	python3 -m pip install api/v2alpha1/python
 	pip install -r ./test/sdk-execution-tests/requirements.txt
 	
@@ -102,6 +111,7 @@ setup-sdk-execution: setup-python setup-kfp
 	pip3 install protobuf==4.25.3
 	cd ./api 
 	make clean python
+	cd ./..
 	python3 -m pip install api/v2alpha1/python
 	pip install -r ./test/sdk-execution-tests/requirements.txt
 	

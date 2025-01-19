@@ -4,6 +4,10 @@ on:
     paths:
       - 'backend/api/**/*.proto'
       - '.github/workflows/validate-proto-gen.yml'
+      - 'backend/api/**/go_http_client/**'
+      - 'backend/api/**/go_client/**'
+      - 'backend/api/**/python_http_client/**'
+      - 'backend/api/**/swagger/**'
 
 jobs:
   validate-generated-files:

@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 .PHONY: create-kind-cluster
 create-kind-cluster:
 	kind create cluster --name kfp --image kindest/node:v1.29.2 --wait 5m
@@ -23,8 +25,8 @@ setup-kfp: create-kind-cluster build-images deploy-kfp
 	
 .PHONY: setup-python
 setup-python:
-	python3 -m venv .venv
-	. .venv/bin/activate
+	python3 -m venv .venv && \
+	source .venv/bin/activate
 
 .PHONY: setup-backend-test
 setup-backend-test: setup-python
@@ -46,9 +48,9 @@ setup-grpc-modules-test: setup-python
 	pip3 freeze
 	pip3 install wheel==0.42.0
 	pip install sdk/python
-	cd ./api
-	make clean python
-	cd ./..
+	cd ./api && \
+	make clean python && \
+	cd ..
 	python3 -m pip install api/v2alpha1/python
 	pip install components/google-cloud
 	pip install $(grep 'pytest==' sdk/python/requirements-dev.txt)
@@ -62,12 +64,13 @@ setup-kfp-kubernetes-execution-tests: setup-kfp
 	pip3 freeze
 	pip3 install wheel==0.42.0
 	pip3 install protobuf==4.25.3
-	cd ./api
-	make clean python
-	cd ./..
+	cd ./api && \
+	make clean python && \
+	cd ..
 	python3 -m pip install api/v2alpha1/python
-	cd ./kubernetes_platform
-	make clean python
+	cd ./kubernetes_platform && \
+	make clean python && \
+	cd .. 
 	pip install -e ./kubernetes_platform/python[dev]
 	pip install -r ./test/kfp-kubernetes-execution-tests/requirements.txt
 
@@ -79,12 +82,13 @@ setup-kfp-kubernetes-execution-tests-without-kfp:
 	pip3 freeze
 	pip3 install wheel==0.42.0
 	pip3 install protobuf==4.25.3
-	cd ./api
-	make clean python
-	cd ./..
+	cd ./api && \
+	make clean python && \
+	cd ..
 	python3 -m pip install api/v2alpha1/python
-	cd ./kubernetes_platform
-	make clean python
+	cd ./kubernetes_platform && \
+	make clean python && \
+	cd ..
 	pip install -e ./kubernetes_platform/python[dev]
 	pip install -r ./test/kfp-kubernetes-execution-tests/requirements.txt
 	
@@ -108,9 +112,9 @@ setup-sdk-component-yaml: setup-python
 	pip3 freeze
 	pip3 install wheel==0.42.0
 	pip3 install protobuf==4.25.3
-	cd ./api
-	make clean python
-	cd ./..
+	cd ./api && \
+	make clean python && \
+	cd ..
 	python3 -m pip install api/v2alpha1/python
 	pip install -r ./test/sdk-execution-tests/requirements.txt
 	
@@ -125,9 +129,9 @@ setup-sdk-execution: setup-python setup-kfp
 	pip3 freeze
 	pip3 install wheel==0.42.0
 	pip3 install protobuf==4.25.3
-	cd ./api 
-	make clean python
-	cd ./..
+	cd ./api && \
+	make clean python && \
+	cd ..
 	python3 -m pip install api/v2alpha1/python
 	pip install -r ./test/sdk-execution-tests/requirements.txt
 	
@@ -138,5 +142,5 @@ setup-sdk-isort: setup-python
 setup-sdk-upgrade: setup-python
 
 .PHONY: setup-sdk-yapf
-setup-sdk-yapf: setup-pyton
+setup-sdk-yapf: setup-python
 	pip install yapf

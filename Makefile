@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 include ./Makefile.setup.mk
 
 .PHONY: test-go-unittest
@@ -6,36 +8,36 @@ test-go-unittest:
 
 .PHONY: test-backend-test
 test-backend-test: 
-	. .venv/bin/activate
-	TEST_SCRIPT="test-flip-coin.sh" ./.github/resources/scripts/e2e-test.sh
-	TEST_SCRIPT="test-static-loop.sh" ./.github/resources/scripts/e2e-test.sh
-	TEST_SCRIPT="test-dynamic-loop.sh" ./.github/resources/scripts/e2e-test.sh
-	TEST_SCRIPT="test-env.sh" ./.github/resources/scripts/e2e-test.sh
-	TEST_SCRIPT="test-volume.sh" ./.github/resources/scripts/e2e-test.sh
+	source .venv/bin/activate && \
+	TEST_SCRIPT="test-flip-coin.sh" ./.github/resources/scripts/e2e-test.sh && \
+	TEST_SCRIPT="test-static-loop.sh" ./.github/resources/scripts/e2e-test.sh && \
+	TEST_SCRIPT="test-dynamic-loop.sh" ./.github/resources/scripts/e2e-test.sh && \
+	TEST_SCRIPT="test-env.sh" ./.github/resources/scripts/e2e-test.sh && \
+	TEST_SCRIPT="test-volume.sh" ./.github/resources/scripts/e2e-test.sh 
 
 .PHONY: test-backend-test-flip-coin
 test-backend-test-flip-coin: 
-	. .venv/bin/activate
+	source .venv/bin/activate && \
 	TEST_SCRIPT="test-flip-coin.sh" ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-static-loop
 test-backend-test-static-loop: 
-	. .venv/bin/activate
+	source .venv/bin/activate && \
 	TEST_SCRIPT="test-static-loop.sh" ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-dynamic-loop
 test-backend-test-dynamic-loop: 
-	. .venv/bin/activate
+	source .venv/bin/activate && \
 	TEST_SCRIPT="test-dynamic-loop.sh" ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-env
 test-backend-test-env: 
-	. .venv/bin/activate
+	source .venv/bin/activate && \
 	TEST_SCRIPT="test-env.sh" ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-volume
 test-backend-test-volume: 
-	. .venv/bin/activate
+	source .venv/bin/activate && \
 	TEST_SCRIPT="test-volume.sh" ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-visualization-test
@@ -45,32 +47,32 @@ test-backend-visualization-test:
 .PHONY: test-e2e-initialization-tests-v1
 test-e2e-initialization-tests-v1:
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
-	cd ./backend/test/initialization
+	cd ./backend/test/initialization && \
 	go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
 
 .PHONY: test-e2e-initialization-tests-v2
 test-e2e-initialization-tests-v2:
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
-	cd ./backend/test/v2/initialization
+	cd ./backend/test/v2/initialization && \
 	go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
 
 .PHONY: test-e2e-api-integration-tests-v1
 test-e2e-api-integration-tests-v1:
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
-	cd ./backend/test/integration
+	cd ./backend/test/integration && \
 	go test -v ./... -namespace ${NAMESPACE} -args -runIntegrationTests=true
 
 .PHONY: test-e2e-api-integration-tests-v2
 test-e2e-api-integration-tests-v2:
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
-	cd ./backend/test/v2/integration
+	cd ./backend/test/v2/integration && \
 	go test -v ./... -namespace ${NAMESPACE} -args -runIntegrationTests=true
 
 .PHONY: test-e2e-frontend-integration-test
 test-e2e-frontend-integration-test:
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline-ui" 3000 3000
-	cd ./test/frontend-integration-test
+	cd ./test/frontend-integration-test && \
 	docker build . -t kfp-frontend-integration-test:local
 	docker run --net=host kfp-frontend-integration-test:local --remote-run true
 	

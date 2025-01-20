@@ -16,4 +16,4 @@ jobs:
         uses: actions/checkout@v4    
 
       - name: Run tests
-        run: make kubeflow-pipelines-manifests
+        run: make test-kubeflow-pipelines-manifests

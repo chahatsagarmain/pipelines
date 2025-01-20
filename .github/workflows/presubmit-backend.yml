@@ -10,6 +10,7 @@ on:
     paths:
       - 'backend/**'
       - 'test/presubmit-backend-test.sh'
+      - '.github/workflows/presubmit-backend.yml'
 
 jobs:
   backend-tests:

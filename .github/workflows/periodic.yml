@@ -24,7 +24,7 @@ jobs:
           k8s_version: ${{ matrix.k8s_version }}
       
       - name: Port forward and run Functional Tests
-        run: make periodic-test
+        run: make test-periodic-test
           
       - name: Collect test results
         if: always()

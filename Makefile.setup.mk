@@ -35,8 +35,6 @@ setup-backend-visualization-test: setup-python
 
 .PHONY: setup-frontend-test
 setup-frontend-test:
-	nvm install 14
-	nvm use 14
 	npm cache clean --force
 	cd ./frontend && npm ci
 	
@@ -50,6 +48,7 @@ setup-grpc-modules-test: setup-python
 	pip install sdk/python
 	cd ./api
 	make clean python
+	cd ./..
 	python3 -m pip install api/v2alpha1/python
 	pip install components/google-cloud
 	pip install $(grep 'pytest==' sdk/python/requirements-dev.txt)
@@ -57,6 +56,23 @@ setup-grpc-modules-test: setup-python
 	
 .PHONY: setup-kfp-kubernetes-execution-tests
 setup-kfp-kubernetes-execution-tests: setup-kfp
+	sudo apt-get update
+	sudo apt-get install protobuf-compiler -y
+	pip3 install setuptools
+	pip3 freeze
+	pip3 install wheel==0.42.0
+	pip3 install protobuf==4.25.3
+	cd ./api
+	make clean python
+	cd ./..
+	python3 -m pip install api/v2alpha1/python
+	cd ./kubernetes_platform
+	make clean python
+	pip install -e ./kubernetes_platform/python[dev]
+	pip install -r ./test/kfp-kubernetes-execution-tests/requirements.txt
+
+.PHONY: setup-kfp-kubernetes-execution-tests-without-kfp
+setup-kfp-kubernetes-execution-tests-without-kfp:
 	sudo apt-get update
 	sudo apt-get install protobuf-compiler -y
 	pip3 install setuptools

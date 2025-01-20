@@ -38,4 +38,4 @@ jobs:
 
     - name: Forward port and run samples tests
       run: |
-        make kfp-samples
+        make test-kfp-samples

@@ -84,9 +84,9 @@ To replicate the steps locally:
 
 3.  To mimic the GitHub Actions environment, export any required environment variables found in the workflow files.
 
-4.  Install the dependencies for the test using command `make setup-{test_name}` . The commands with the steps are in `Makefile.setup.mk`
+4.  Install the necessary dependencies for the test by running the command `make setup-{test_name}`. The steps for setting up dependencies are defined in the `Makefile.setup.mk` file.
 
-5.  Run the test using command `make {test_name}` all the test that can be run using make command are in `Makefile`. 
+5.  Execute the test using command `make {test_name}` , all the test that can be run using Make commands are mentioned in `Makefile`. 
 
 * * * * *
 

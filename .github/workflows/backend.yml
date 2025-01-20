@@ -45,19 +45,19 @@ jobs:
         uses: ./.github/actions/kfp-tekton-cluster
       - name: "flip coin test"
         run: |
-          make backend-test-flip-coin
+          make test-backend-test-flip-coin
       - name: "static loop test"
         run: |
-          make backend-test-static-loop
+          make test-backend-test-static-loop
       - name: "dynamic loop test"
         run: |
-          make backend-test-dynamic-loop
+          make test-backend-test-dynamic-loop
       - name: "use env"
         run: |
-          make backend-test-env
+          make test-backend-test-env
       - name: "use volume"
         run: |
-          make backend-test-volume
+          make test-backend-test-volume
       - name: Collect test results
         if: always()
         uses: actions/upload-artifact@v4

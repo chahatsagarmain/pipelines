@@ -28,5 +28,5 @@ jobs:
       run: make setup-frontend-test
 
     - name: Run Frontend Tests
-      run: make frontend-test
+      run: make test-frontend
 

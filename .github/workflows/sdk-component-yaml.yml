@@ -28,4 +28,4 @@ jobs:
         run: make setup-sdk-component-yaml
         
       - name: Run component YAML tests
-        run: make test-sdk-component-yam
+        run: make test-sdk-component-yaml

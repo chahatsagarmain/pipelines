@@ -15,7 +15,6 @@ deploy-kfp-tekton:
 
 .PHONY: setup-kfp-tekton
 setup-kfp-tekton:
-	$(MAKE) create-kind-cluster && \
 	$(MAKE) build-images && \
 	$(MAKE) deploy-kfp-tekton
 
@@ -25,7 +24,6 @@ deploy-kfp:
 
 .PHONY: setup-kfp
 setup-kfp:
-	$(MAKE) create-kind-cluster && \
 	$(MAKE) build-images && \
 	$(MAKE) deploy-kfp
 
@@ -62,7 +60,7 @@ setup-grpc-modules-test:
 	cd .. && \
 	python3 -m pip install api/v2alpha1/python && \
 	pip install components/google-cloud && \
-	pip install $(grep 'pytest==' sdk/python/requirements-dev.txt) && \
+	pip install $(shell grep 'pytest==' sdk/python/requirements-dev.txt) && \
 	pytest ./test/gcpc-tests/run_all_gcpc_modules.py
 
 .PHONY: setup-kfp-kubernetes-execution-tests

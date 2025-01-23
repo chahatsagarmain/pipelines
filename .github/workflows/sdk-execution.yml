@@ -38,4 +38,4 @@ jobs:
 
       - name: Forward API port and run tests
         run: |
-          make sdk-execution
+          make test-sdk-execution

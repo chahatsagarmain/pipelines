@@ -33,4 +33,4 @@ jobs:
       run: make setup-sdk-yapf
 
     - name: Run YAPF SDK Tests
-      run: make sdk-yapf
+      run: make test-sdk-yapf

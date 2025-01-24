@@ -25,4 +25,4 @@ jobs:
         run: make setup-grpc-modules-test
 
       - name: Run test
-        run: make test-grpc-modules-test
+        run: make test-grpc-modules

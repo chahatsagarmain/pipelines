@@ -125,7 +125,6 @@ test-kfp-sdk-runtime-tests:
 
 .PHONY: test-kfp-sdk-tests
 test-kfp-sdk-tests:
-	$(MAKE) setup-python && \
 	./test/presubmit-tests-sdk.sh
 
 .PHONY: test-kubeflow-pipelines-manifests

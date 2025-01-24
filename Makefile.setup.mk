@@ -34,7 +34,8 @@ setup-python:
 
 .PHONY: setup-backend-test
 setup-backend-test:
-	$(MAKE) setup-python && \
+	python3 -m venv .venv && \
+	source .venv/bin/activate && \
 	pip install -e sdk/python
 
 .PHONY: setup-backend-visualization-test

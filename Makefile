@@ -22,7 +22,7 @@ test-backend-test:
 
 .PHONY: test-backend-test-flip-coin
 test-backend-test-flip-coin:
-	$(MAKE) setup-python && \
+	source .venv/bin/activate && \
 	TEST_SCRIPT="test-flip-coin.sh" ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-static-loop

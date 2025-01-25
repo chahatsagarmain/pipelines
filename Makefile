@@ -13,7 +13,7 @@ test-go-unittest:
 
 .PHONY: test-backend-test
 test-backend-test:
-	$(MAKE) setup-python && \
+	source .venv/bin/activate && \
 	TEST_SCRIPT="test-flip-coin.sh" ./.github/resources/scripts/e2e-test.sh && \
 	TEST_SCRIPT="test-static-loop.sh" ./.github/resources/scripts/e2e-test.sh && \
 	TEST_SCRIPT="test-dynamic-loop.sh" ./.github/resources/scripts/e2e-test.sh && \
@@ -22,28 +22,28 @@ test-backend-test:
 
 .PHONY: test-backend-test-flip-coin
 test-backend-test-flip-coin:
-	$(MAKE) setup-python && \
-	TEST_SCRIPT="test-flip-coin.sh" ./.github/resources/scripts/e2e-test.sh
+	source .venv/bin/activate && \
+	TEST_SCRIPT="test-flip-coin.sh" && source ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-static-loop
 test-backend-test-static-loop:
-	$(MAKE) setup-python && \
-	TEST_SCRIPT="test-static-loop.sh" ./.github/resources/scripts/e2e-test.sh
+	source .venv/bin/activate && \
+	TEST_SCRIPT="test-static-loop.sh" && source ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-dynamic-loop
 test-backend-test-dynamic-loop:
-	$(MAKE) setup-python && \
-	TEST_SCRIPT="test-dynamic-loop.sh" ./.github/resources/scripts/e2e-test.sh
+	source .venv/bin/activate && \
+	TEST_SCRIPT="test-dynamic-loop.sh" && source ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-env
 test-backend-test-env:
-	$(MAKE) setup-python && \
-	TEST_SCRIPT="test-env.sh" ./.github/resources/scripts/e2e-test.sh
+	source .venv/bin/activate && \
+	TEST_SCRIPT="test-env.sh" && source ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-test-volume
 test-backend-test-volume:
-	$(MAKE) setup-python && \
-	TEST_SCRIPT="test-volume.sh" ./.github/resources/scripts/e2e-test.sh
+	source .venv/bin/activate && \
+	TEST_SCRIPT="test-volume.sh" && source ./.github/resources/scripts/e2e-test.sh
 
 .PHONY: test-backend-visualization-test
 test-backend-visualization-test:
@@ -125,7 +125,6 @@ test-kfp-sdk-runtime-tests:
 
 .PHONY: test-kfp-sdk-tests
 test-kfp-sdk-tests:
-	$(MAKE) setup-python && \
 	./test/presubmit-tests-sdk.sh
 
 .PHONY: test-kubeflow-pipelines-manifests

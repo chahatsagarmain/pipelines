@@ -16,7 +16,7 @@ jobs:
       matrix:
         api_version: ['v1beta1', 'v2beta1']
       fail-fast: false
-      
+
     steps:
       - uses: actions/checkout@v4
 
@@ -42,7 +42,7 @@ jobs:
           export API_VERSION=${{ matrix.api_version }}
           export PROTOCCOMPILER=protoc
           export TMP_OUTPUT=/tmp
-          ./backend/api/hack/generate_api.sh
+          ./backend/api/hack/generator.sh
 
       - name: Generate Python Package
         run: |

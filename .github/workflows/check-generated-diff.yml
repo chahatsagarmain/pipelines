@@ -3,7 +3,7 @@ on:
   pull_request:
     paths:
       - 'backend/api/**/*.proto'
-      - '.github/workflows/validate-proto-gen.yml'
+      - '.github/workflows/check-generated-diff.yml'
       - 'backend/api/**/go_http_client/**'
       - 'backend/api/**/go_client/**'
       - 'backend/api/**/python_http_client/**'
@@ -16,12 +16,14 @@ jobs:
       matrix:
         api_version: ['v1beta1', 'v2beta1']
       fail-fast: false
-
-    container:
-      image: golang:1.21
-
+      
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
 
       - name: Install Dependencies
         run: |

@@ -28,7 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           # Go dependencies
-          apt-get update && apt-get install -y protobuf-compiler jq default-jdk python3 python3-pip curl
+          sudo apt-get update && sudo apt-get install -y protobuf-compiler jq default-jdk python3 python3-pip curl
           go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@latest
           go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
           go install github.com/golang/protobuf/protoc-gen-go@latest

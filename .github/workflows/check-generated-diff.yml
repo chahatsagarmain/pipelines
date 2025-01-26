@@ -42,7 +42,7 @@ jobs:
           API_VERSION: ${{ matrix.api_version }}
           PROTOCCOMPILER: "protoc"
           TMP_OUTPUT: "/tmp"
-          BASE_DIR: "."
+          KFP_REPO_PATH: "."
         run: |
           ./backend/api/hack/generator.sh
 

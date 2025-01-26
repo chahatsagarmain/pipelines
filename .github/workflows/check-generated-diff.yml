@@ -38,13 +38,17 @@ jobs:
           python3 -m pip install setuptools wheel
 
       - name: Generate Proto Files
+        env:
+          API_VERSION: ${{ matrix.api_version }}
+          PROTOCCOMPILER: "protoc"
+          TMP_OUTPUT: "/tmp"
+          BASE_DIR: "."
         run: |
-          export API_VERSION=${{ matrix.api_version }}
-          export PROTOCCOMPILER=protoc
-          export TMP_OUTPUT=/tmp
           ./backend/api/hack/generator.sh
 
       - name: Generate Python Package
+        env:
+          API_VERSION: ${{ matrix.api_version }}
         run: |
           export API_VERSION=${{ matrix.api_version }}
           ./backend/api/build_kfp_server_api_python_package.sh

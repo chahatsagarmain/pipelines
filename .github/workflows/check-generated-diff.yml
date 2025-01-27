@@ -18,6 +18,10 @@ jobs:
       fail-fast: false
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+          path: /go/src/github.com/kubeflow/pipelines
+          
       - name: Install Go
         uses: actions/setup-go@v5
         with:
@@ -30,10 +34,6 @@ jobs:
           echo "API_VERSION=${{ matrix.api_version }}" >> $GITHUB_ENV
           echo "PROTOCCOMPILER=protoc" >> $GITHUB_ENV
           echo "TMP_OUTPUT=/tmp" >> $GITHUB_ENV
-
-      - uses: actions/checkout@v4
-        with:
-          path: /go/src/github.com/kubeflow/pipelines
 
       - name: Install Dependencies
         run: |

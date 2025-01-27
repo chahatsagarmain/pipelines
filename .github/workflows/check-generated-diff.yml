@@ -24,7 +24,7 @@ jobs:
 
       - name: Create symlink for Go workspace
         run: |
-          mkdir -p /go/src/github.com/kubeflow
+          sudo mkdir -p /go/src/github.com/kubeflow
           ln -s $GITHUB_WORKSPACE/pipelines /go/src/github.com/kubeflow/pipelines
 
       - name: Install Go

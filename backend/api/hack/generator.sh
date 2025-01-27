@@ -18,10 +18,11 @@ set -ex
 
 export TMP_OUTPUT=/tmp
 API_VERSION=$API_VERSION
+BASE_DIR="${KFP_REPO_PATH:-/go/src/github.com/kubeflow/pipelines}"
 echo ${PROTOCCOMPILER}
 
 # Change directory.
-cd /go/src/github.com/kubeflow/pipelines
+cd ${BASE_DIR}
 KFP_VERSION=$(cat VERSION)
 
 # Delete currently generated code.

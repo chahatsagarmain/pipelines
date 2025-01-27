@@ -20,16 +20,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: /go/src/github.com/kubeflow/pipelines
-          
+          path: pipelines
+
+      - name: Create symlink for Go workspace
+        run: |
+          mkdir -p /go/src/github.com/kubeflow
+          ln -s $GITHUB_WORKSPACE/pipelines /go/src/github.com/kubeflow/pipelines
+
       - name: Install Go
         uses: actions/setup-go@v5
         with:
-          go-version-file: go.mod
+          go-version-file: pipelines/go.mod
 
       - name: Set up environment
         run: |
-          mkdir -p /go/src/github.com/kubeflow
           echo "GOPATH=/go" >> $GITHUB_ENV
           echo "API_VERSION=${{ matrix.api_version }}" >> $GITHUB_ENV
           echo "PROTOCCOMPILER=protoc" >> $GITHUB_ENV

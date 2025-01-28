@@ -28,10 +28,7 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
     Returns:
         str: The description of the parameter.
     """
-    if not isinstance(fn, type) and not callable(fn):
-        docstring = fn.__class__.__doc__
-    else:
-        docstring = fn.__doc__
+    docstring = fn.__doc__
 
     if docstring is None:
         raise ValueError(
@@ -50,6 +47,11 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
     first_line_args_regex = rf'^\s*{param_name}\s*(?:\([^)]*\))?\s*:\s*'
     first_already_found = False
     return_lines = []
+    for line in lines:
+        stripped = line.lstrip()
+        print(f"Checking line: '''{line}'''")
+        print(f"Stripped line: '''{stripped}'''")
+        print(f"Regex match: {bool(re.match(first_line_args_regex, stripped))}")
     for line in lines:
         if not first_already_found and re.match(first_line_args_regex,
                                                 line.lstrip()):

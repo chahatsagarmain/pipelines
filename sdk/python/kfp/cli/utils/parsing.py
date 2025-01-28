@@ -28,10 +28,7 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
     Returns:
         str: The description of the parameter.
     """
-    if not isinstance(fn, type) and not callable(fn):
-        docstring = fn.__class__.__doc__
-    else:
-        docstring = fn.__doc__
+    docstring = fn.__doc__
 
     if docstring is None:
         raise ValueError(
@@ -51,19 +48,9 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
     first_already_found = False
     return_lines = []
     for line in lines:
-        if not first_already_found and re.match(first_line_args_regex,
-                                                line.lstrip()):
-            new_line = re.sub(first_line_args_regex, '', line.strip())
-            return_lines.append(new_line)
-            first_already_found = True
-            first_indentation_level = len(line) - len(line.lstrip())
-            continue
-
-        if first_already_found:
-            indentation_level = len(line) - len(line.lstrip())
-            if indentation_level <= first_indentation_level:
-                return ' '.join(return_lines)
-            else:
-                return_lines.append(line.strip())
+        stripped = line.lstrip()
+        print(f"Checking line: '''{line}'''")
+        print(f"Stripped line: '''{stripped}'''")
+        print(f"Regex match: {bool(re.match(first_line_args_regex, stripped))}")
     raise ValueError(
         f'Could not find parameter {param_name} in docstring of {fn}')

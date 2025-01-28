@@ -28,7 +28,10 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
     Returns:
         str: The description of the parameter.
     """
-    docstring = fn.__doc__
+    if not isinstance(fn, type) and not callable(fn):
+        docstring = fn.__class__.__doc__
+    else:
+        docstring = fn.__doc__
 
     if docstring is None:
         raise ValueError(
@@ -43,10 +46,8 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
         raise ValueError(f'No Args section found in docstring of {fn}')
 
     lines = lines[i + 1:]
-    
     # More lenient regex pattern
     first_line_args_regex = rf'^\s*{param_name}\s*(?:\([^)]*\))?\s*:\s*'
-    
     first_already_found = False
     return_lines = []
     for line in lines:

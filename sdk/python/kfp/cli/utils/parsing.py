@@ -25,9 +25,6 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
         fn (Callable): The function of method with a __doc__ docstring implemented.
         param_name (str): The parameter for which to extract the description.
 
-    Raises:
-        ValueError: If docstring is not found or parameter is not found in docstring.
-
     Returns:
         str: The description of the parameter.
     """
@@ -38,18 +35,23 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
             f'Could not find parameter {param_name} in docstring of {fn}')
     lines = docstring.splitlines()
 
-    # collect all lines beginning after args, also get indentation space_chars
+    # Find Args section
     for i, line in enumerate(lines):
         if line.lstrip().startswith('Args:'):
             break
+    else:  # No Args section found
+        raise ValueError(f'No Args section found in docstring of {fn}')
 
     lines = lines[i + 1:]
-
+    # More lenient regex pattern
+    first_line_args_regex = rf'^\s*{param_name}\s*(?:\([^)]*\))?\s*:\s*'
     first_already_found = False
     return_lines = []
-
-    # allow but don't require type in docstring
-    first_line_args_regex = rf'^{param_name}( \(.*\))?: '
+    for line in lines:
+        stripped = line.lstrip()
+        print(f"Checking line: '''{line}'''")
+        print(f"Stripped line: '''{stripped}'''")
+        print(f"Regex match: {bool(re.match(first_line_args_regex, stripped))}")
     for line in lines:
         if not first_already_found and re.match(first_line_args_regex,
                                                 line.lstrip()):

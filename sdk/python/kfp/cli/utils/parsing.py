@@ -31,7 +31,10 @@ def get_param_descr(fn: Callable, param_name: str) -> str:
     Returns:
         str: The description of the parameter.
     """
-    docstring = fn.__doc__
+    if not isinstance(fn, type) and not callable(fn):
+        docstring = fn.__class__.__doc__
+    else:
+        docstring = fn.__doc__
 
     if docstring is None:
         raise ValueError(

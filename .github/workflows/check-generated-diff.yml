@@ -28,13 +28,13 @@ jobs:
 
       - name: Set up environment
         run: |
-          echo "GOPATH=${{ github.workspace }}/go" >> $GITHUB_ENV
-          echo "GOPATH=${{ github.workspace }}/go" >> $GITHUB_ENV
+          echo "GOPATH=${GITHUB_WORKSPACE}/go" >> $GITHUB_ENV
+          echo "KFP_REPO_PATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
           echo "API_VERSION=${{ matrix.api_version }}" >> $GITHUB_ENV
           echo "PROTOCCOMPILER=protoc" >> $GITHUB_ENV
-          echo "KFP_REPO_PATH=${{ github.workspace }}" >> $GITHUB_ENV
-          mkdir -p ${{ github.workspace }}/go/src/github.com/kubeflow
-          ln -s ${{ github.workspace }} ${{ github.workspace }}/go/src/github.com/kubeflow/pipelines
+          echo "TMP_OUTPUT=/tmp" >> $GITHUB_ENV
+          mkdir -p ${GITHUB_WORKSPACE}/go/src/github.com/kubeflow
+          ln -s ${GITHUB_WORKSPACE} ${GITHUB_WORKSPACE}/go/src/github.com/kubeflow/pipelines
 
       - name: Install Dependencies
         run: |
@@ -49,6 +49,8 @@ jobs:
         env:
           PROTOCCOMPILER: protoc
           KFP_REPO_PATH: ${{ github.workspace }}
+          API_VERSION: ${{ matrix.api_version }}
+          TMP_OUTPUT: /tmp
         run: |
           cd $KFP_REPO_PATH
           ./backend/api/hack/generator.sh

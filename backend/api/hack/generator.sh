@@ -17,6 +17,10 @@
 set -ex
 
 export TMP_OUTPUT=/tmp
+export PROTOC_GEN_GO="${PROTOC_GEN_GO:-${GOPATH}/bin/protoc-gen-go}"
+export PROTOC_GEN_GW="${PROTOC_GEN_GW:-${GOPATH}/bin/protoc-gen-grpc-gateway}"
+export PROTOC_GEN_SWAGGER="${PROTOC_GEN_SWAGGER:-${GOPATH}/bin/protoc-gen-swagger}"
+export SWAGGER="${SWAGGER:-${GOPATH}/bin/swagger}"
 API_VERSION=$API_VERSION
 BASE_DIR="${KFP_REPO_PATH:-/go/src/github.com/kubeflow/pipelines}"
 echo ${PROTOCCOMPILER}

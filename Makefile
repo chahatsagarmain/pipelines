@@ -64,6 +64,7 @@ test-e2e-initialization-tests-v2:
 .PHONY: test-e2e-api-integration-tests-v1
 test-e2e-api-integration-tests-v1:
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888 && \
+	./.github/resources/scripts/forward-port.sh "kubeflow" "mysql" 3306 3306 && \
 	cd ./backend/test/integration && \
 	go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
 

@@ -65,13 +65,13 @@ test-e2e-initialization-tests-v2:
 test-e2e-api-integration-tests-v1:
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888 && \
 	cd ./backend/test/integration && \
-	go test -v ./... -namespace ${NAMESPACE} -args -runIntegrationTests=true
+	go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
 
 .PHONY: test-e2e-api-integration-tests-v2
 test-e2e-api-integration-tests-v2:
 	./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888 && \
 	cd ./backend/test/v2/integration && \
-	go test -v ./... -namespace ${NAMESPACE} -args -runIntegrationTests=true
+	go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
 
 .PHONY: test-e2e-frontend-integration-test
 test-e2e-frontend-integration-test:

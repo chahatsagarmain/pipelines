@@ -24,6 +24,9 @@ jobs:
       with:
         node-version: '22'
     
+    - name: Setup frontend test
+      run: make setup-frontend-test
+    
     - name: Run Frontend Tests
       run: make test-frontend
 

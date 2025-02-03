@@ -157,19 +157,9 @@ jobs:
         with:
           k8s_version: ${{ matrix.k8s_version }}
 
-      - name: Forward API port
-        run: ./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
-
-      - name: Forward Frontend port
-        run: ./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline-ui" 3000 3000
-
-      - name: Build frontend integration tests image
-        working-directory: ./test/frontend-integration-test
-        run: docker build . -t kfp-frontend-integration-test:local
-
-      - name: Frontend integration tests
-        run: docker run --net=host kfp-frontend-integration-test:local --remote-run true
-
+      - name: Forward API port and run integration test 
+        run: make test-e2e-frontend-integration-test
+        
       - name: Collect test results
         if: always()
         uses: actions/upload-artifact@v4
@@ -197,18 +187,9 @@ jobs:
         with:
           k8s_version: ${{ matrix.k8s_version }}
 
-      - name: Forward API port
-        run: ./.github/resources/scripts/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
-
-      - name: Install prerequisites
-        run: pip3 install -r ./test/sample-test/requirements.txt
-
-      - name: Basic sample tests - sequential
-        run:  python3 ./test/sample-test/sample_test_launcher.py sample_test run_test --namespace kubeflow --test-name sequential --results-gcs-dir output
-
-      - name: Basic sample tests - exit_handler
-        run: python3 ./test/sample-test/sample_test_launcher.py sample_test run_test --namespace kubeflow --test-name exit_handler --expected-result failed --results-gcs-dir output
-
+      - name: Forward API port and run integration tests
+        run: make test-e2e-basic-sample-tests
+        
       - name: Collect test results
         if: always()
         uses: actions/upload-artifact@v4

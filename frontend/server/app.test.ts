@@ -30,7 +30,7 @@ jest.mock('node-fetch');
 const mockedFetch: jest.Mock = fetch as any;
 
 describe('UIServer apis', () => {
-  let app: UIServer;
+  var app: UIServer;
   const tagName = '1.0.0';
   const commitHash = 'abcdefg';
   const { argv, buildDate, indexHtmlContent } = commonSetup({ tagName, commitHash });
@@ -251,7 +251,7 @@ describe('UIServer apis', () => {
   });
 
   describe('/k8s/pod', () => {
-    let request: requests.SuperTest<requests.Test>;
+    var request: requests.SuperTest<requests.Test>;
     beforeEach(() => {
       app = new UIServer(loadConfigs(argv, {}));
       request = requests(app.start());
@@ -303,7 +303,7 @@ describe('UIServer apis', () => {
   });
 
   describe('/k8s/pod/events', () => {
-    let request: requests.SuperTest<requests.Test>;
+    var request: requests.SuperTest<requests.Test>;
     beforeEach(() => {
       app = new UIServer(loadConfigs(argv, {}));
       request = requests(app.start());
@@ -368,18 +368,16 @@ describe('UIServer apis', () => {
   // describe('/k8s/pod/logs', () => {});
 
   describe('/apis/v1beta1/', () => {
-    let request: requests.SuperTest<requests.Test>;
-    let kfpApiServer: Server;
+    var request: requests.SuperTest<requests.Test>;
+    var kfpApiServer: Server;
 
     beforeEach(() => {
       const kfpApiPort = 3001;
-      const kfpApp = express();
-      const router = express.Router();
-      router.all('*', (_, res) => {
-        res.status(200).send('KFP API is working');
-      });
-      kfpApp.use('/', router);
-      kfpApiServer = kfpApp.listen(kfpApiPort);
+      kfpApiServer = express()
+        .all('/{*splat}', (_, res) => {
+          res.status(200).send('KFP API is working');
+        })
+        .listen(kfpApiPort);
       app = new UIServer(
         loadConfigs(argv, {
           ML_PIPELINE_SERVICE_PORT: `${kfpApiPort}`,

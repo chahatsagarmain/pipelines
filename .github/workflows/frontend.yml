@@ -28,7 +28,7 @@ jobs:
       run: npm cache clean --force
 
     - name: Install dependencies
-      run: cd ./frontend && npm ci
+      run: cd ./frontend && npm config set legacy-peer-deps true &&npm ci
 
     - name: Run Frontend Tests
       run: cd ./frontend && npm run test:ci

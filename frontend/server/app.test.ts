@@ -33,7 +33,7 @@ describe('UIServer apis', () => {
   let app: UIServer;
   const tagName = '1.0.0';
   const commitHash = 'abcdefg';
-  const { argv, buildDate, indexHtmlContent } = commonS etup({ tagName, commitHash });
+  const { argv, buildDate, indexHtmlContent } = commonSetup({ tagName, commitHash });
 
   afterEach(() => {
     if (app) {

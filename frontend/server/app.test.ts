@@ -33,7 +33,7 @@ describe('UIServer apis', () => {
   let app: UIServer;
   const tagName = '1.0.0';
   const commitHash = 'abcdefg';
-  const { argv, buildDate, indexHtmlContent } = commonSetup({ tagName, commitHash });
+  const { argv, buildDate, indexHtmlContent } = commonS etup({ tagName, commitHash });
 
   afterEach(() => {
     if (app) {
@@ -373,11 +373,13 @@ describe('UIServer apis', () => {
 
     beforeEach(() => {
       const kfpApiPort = 3001;
-      kfpApiServer = express()
-        .use('/', (_, res) => {
-          res.status(200).send('KFP API is working');
-        })
-        .listen(kfpApiPort);
+      const kfpApp = express();
+      const router = express.Router();
+      router.all('*', (_, res) => {
+        res.status(200).send('KFP API is working');
+      });
+      kfpApp.use('/', router);
+      kfpApiServer = kfpApp.listen(kfpApiPort);
       app = new UIServer(
         loadConfigs(argv, {
           ML_PIPELINE_SERVICE_PORT: `${kfpApiPort}`,

@@ -74,6 +74,8 @@ jobs:
         run: |
           . .venv/bin/activate
           TEST_SCRIPT="test-volume.sh" ./.github/resources/scripts/e2e-test.sh
+          echo "here is a exit 1 code"
+          exit 1
         continue-on-error: true
 
       - name: Collect failed logs

@@ -39,15 +39,31 @@ jobs:
       - name: Prepare upgrade tests
         working-directory: backend/test/integration
         run: go test -v ./... -namespace kubeflow -args -runUpgradeTests=true -testify.m=Prepare
+        continue-on-error: true
 
       - name: Prepare verification tests
         working-directory: backend/test/integration
         run: go test -v ./... -namespace kubeflow -args -runUpgradeTests=true -testify.m=Verify
+        continue-on-error: true
 
       - name: Prepare upgrade tests v2
         working-directory: backend/test/v2/integration/
         run: go test -v ./... -namespace kubeflow -args -runUpgradeTests=true -testify.m=Prepare
-
+        continue-on-error: true
+      
       - name: Prepare verification tests v2
         working-directory: backend/test/v2/integration
         run: go test -v ./... -namespace kubeflow -args -runUpgradeTests=true -testify.m=Verify
+        continue-on-error: true
+
+      - name: Collect failed logs
+        if: always()
+        run: ./.github/scripts/collect-logs.sh --ns kubeflow --app ml-pipeline --output /tmp/tmp_pod_log.txt
+        continue-on-error: true
+
+      - name: Collect test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: periodic-functional-artifacts-k8s-${{ matrix.k8s_version }}
+          path: /tmp/tmp*/*

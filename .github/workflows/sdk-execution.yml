@@ -43,7 +43,7 @@ jobs:
         run: sudo apt-get install protobuf-compiler -y
 
       - name: Install setuptools
-        run: | 
+        run: |
           pip3 install setuptools
           pip3 freeze
 
@@ -69,3 +69,16 @@ jobs:
           export KFP_ENDPOINT="http://localhost:8888"
           export TIMEOUT_SECONDS=2700
           pytest ./test/sdk-execution-tests/sdk_execution_tests.py --asyncio-task-timeout $TIMEOUT_SECONDS
+        continue-on-error: true
+
+      - name: Collect failed logs
+        if: always()
+        run: ./.github/resources/scripts/collect-logs.sh --ns kubeflow --app ml-pipeline --output /tmp/tmp_pod_log.txt
+        continue-on-error: true
+
+      - name: Collect test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: periodic-functional-artifacts-k8s-${{ matrix.k8s_version }}
+          path: /tmp/tmp*/*

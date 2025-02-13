@@ -93,3 +93,7 @@ jobs:
         with:
           name: kfp-tekton-backend-artifacts
           path: /tmp/tmp*/*
+      
+      - name: Fail test
+        if: ${{ (steps.flip-coin.outcome != 'success') || (steps.static-loop.outcome != 'success') || (steps.dynamic-loop.outcome != 'success') || (steps.use-env.outcome != 'success') || (steps.use-volume.outcome != 'success') }}
+        run: exit 1

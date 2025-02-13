@@ -83,3 +83,7 @@ jobs:
         with:
           name: periodic-functional-artifacts-k8s-${{ matrix.k8s_version }}
           path: /tmp/tmp*/*
+      
+      - name: Fail test
+        if: steps.tests.outcome != 'success'
+        run: exit 1

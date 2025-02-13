@@ -91,3 +91,7 @@ jobs:
         with:
           name: kfp-execution-tests-artifacts-k8s-${{ matrix.k8s_version }}
           path: /tmp/tmp*/*
+          
+      - name: Fail test
+        if: steps.test.outcome != 'success'
+        run: exit 1

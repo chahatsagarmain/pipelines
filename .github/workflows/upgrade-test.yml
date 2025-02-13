@@ -71,3 +71,7 @@ jobs:
         with:
           name: periodic-functional-artifacts-k8s-${{ matrix.k8s_version }}
           path: /tmp/tmp*/*
+    
+      - name: Fail test
+        if: ${{ (steps.upgrade-tests.outcome != 'success' ) || ( steps.upgrade-tests-v2.outcome != 'success' ) || ( steps.verification-tests.outcome != 'success' ) || ( steps.verification-tests-v2.outcome != 'success' )}}
+        run: exit 1

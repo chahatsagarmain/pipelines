@@ -273,3 +273,7 @@ jobs:
         with:
           name: kfp-e2e-tests-artifacts-k8s-${{ matrix.k8s_version }}
           path: /tmp/tmp*/*
+      
+      - name: Fail test
+        if: ${{ (steps.sequential-test.outcome != 'success') || (steps.sample-test.outcome != 'success')}}
+        run: exit 1

@@ -4,7 +4,7 @@ set -e
 
 NS=""
 APP_NAME=""
-OUTPUT_FILE="/tmp/tmp_pod_log.txt"
+OUTPUT_FILE="/tmp/tmp.log/tmp_pod_log.txt"
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
@@ -15,6 +15,8 @@ while [[ "$#" -gt 0 ]]; do
     esac
     shift
 done
+
+mkdir -p /tmp/tmp.log
 
 if [[ -z "$NS" || -z "$APP_NAME" ]]; then
     echo "Both --ns and --app parameters are required."

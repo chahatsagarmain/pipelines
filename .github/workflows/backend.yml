@@ -58,6 +58,7 @@ jobs:
         run: |
           . .venv/bin/activate
           TEST_SCRIPT="test-static-loop.sh" ./.github/resources/scripts/e2e-test.sh
+          exit 1
         continue-on-error: true
 
       - name: "dynamic loop test"

@@ -3,6 +3,9 @@ name: Scheduled/Recurring Run Integration Test
 on:
   push:
     branches: [master]
+  pull_request:
+    branches:
+      - master
 
 jobs:
   sdk-execution-tests:
@@ -55,5 +58,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: periodic-functional-artifacts-k8s-${{ matrix.k8s_version }}
+          name: recurring-run-k8s-${{ matrix.k8s_version }}
           path: /tmp/tmp*/*

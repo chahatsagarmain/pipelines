@@ -20,8 +20,8 @@ def get_pipeline_id():
     """Fetches the pipeline ID by name."""
     pipelines = KFP_CLIENT.list_pipelines().pipelines
     for pipeline in pipelines:
-        if pipeline.name == PIPELINE_NAME:
-            return pipeline.id
+        if pipeline.DisplayName == PIPELINE_NAME:
+            return pipeline.PipelineID
     raise Exception(f"Pipeline '{PIPELINE_NAME}' not found.")
 
 def schedule_pipeline():
@@ -46,8 +46,8 @@ def schedule_pipeline():
         cron_expression=trigger.get("cron_schedule"),
         enabled=trigger.get("enabled")
     )
-    print(f"Scheduled pipeline: {response.id}")
-    return response.id
+    print(f"Scheduled pipeline: {response.recurring_run_id}")
+    return response.recurring_run_id
 
 def get_successful_runs():
     """Fetches successful runs for the experiment."""

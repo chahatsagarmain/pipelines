@@ -14,7 +14,7 @@ NAMESPACE = "kubeflow"
 def create_experiment():
     """Creates an experiment if it doesn't exist."""
     experiment = KFP_CLIENT.create_experiment(name=EXPERIMENT_NAME, namespace=NAMESPACE)
-    return experiment.id
+    return experiment.experiment_id
 
 def get_pipeline_id():
     """Fetches the pipeline ID by name."""

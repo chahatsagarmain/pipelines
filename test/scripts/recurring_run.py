@@ -20,8 +20,8 @@ def get_pipeline_id():
     """Fetches the pipeline ID by name."""
     pipelines = KFP_CLIENT.list_pipelines().pipelines
     for pipeline in pipelines:
-        if pipeline.DisplayName == PIPELINE_NAME:
-            return pipeline.PipelineID
+        if pipeline.display_name == PIPELINE_NAME:
+            return pipeline.pipeline_id
     raise Exception(f"Pipeline '{PIPELINE_NAME}' not found.")
 
 def schedule_pipeline():

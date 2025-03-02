@@ -37,6 +37,9 @@ def schedule_pipeline():
     }
 
     run_name = f"{PIPELINE_NAME}-schedule"
+    pipeline_params = {
+        "recipient": "World" 
+    }
     response = KFP_CLIENT.create_recurring_run(
         experiment_id=experiment_id,
         job_name=run_name,
@@ -44,7 +47,8 @@ def schedule_pipeline():
         start_time=trigger.get("start_time"),
         end_time=trigger.get("end_time"),
         cron_expression=trigger.get("cron_schedule"),
-        enabled=trigger.get("enabled")
+        enabled=trigger.get("enabled"),
+        params=pipeline_params
     )
     print(f"Scheduled pipeline: {response.id}")
     return response.id
